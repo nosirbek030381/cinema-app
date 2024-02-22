@@ -16,7 +16,7 @@ export default function TabNavigation() {
 
 						if (route.name === 'Home') {
 							iconName = focused ? 'home' : 'home-outline';
-						} else if (route.name === 'Detail') {
+						} else if (route.name === 'Details') {
 							iconName = focused ? 'settings' : 'settings-outline';
 						}
 
@@ -27,7 +27,7 @@ export default function TabNavigation() {
 				})}
 			>
 				<Tab.Screen name='Home' component={Home} options={{ headerShown: false }} />
-				<Tab.Screen name='Detail' component={Detail} options={{ headerShown: false }} />
+				<Tab.Screen name='Details' component={Detail} options={{ headerShown: false }} />
 			</Tab.Navigator>
 		</NavigationContainer>
 	);
