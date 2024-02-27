@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 export default function UpcomingMovie() {
 	return (
 		<View>
-			<Text>Upcoming </Text>
+			<Text>Upcomingc....</Text>
 		</View>
 	);
 }

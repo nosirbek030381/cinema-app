@@ -18,3 +18,13 @@ export const fetchUpcomingMovie = () => {
 export const fetchTopRatedMovie = () => {
 	return apiRequest(top_rated);
 };
+
+export const image500 = (posterPath, backdropPath) => {
+	return `https://image.tmdb.org/t/p/w500${posterPath || backdropPath}`;
+};
+export const image342 = (posterPath, backdropPath) => {
+	return `https://image.tmdb.org/t/p/w342${posterPath || backdropPath}`;
+};
+export const image185 = (posterPath, backdropPath) => {
+	return `https://image.tmdb.org/t/p/w185${posterPath || backdropPath}`;
+};
