@@ -23,7 +23,7 @@ export default function Home({ navigation }) {
 	useEffect(() => {
 		getTrendingMovie();
 		getUpcomingMovie();
-		getTopratedMovie();
+		getTopRatedMovie();
 		getPopularMovie();
 	}, []);
 
@@ -38,7 +38,7 @@ export default function Home({ navigation }) {
 		setUpcoming(data.results);
 	};
 
-	const getTopratedMovie = async () => {
+	const getTopRatedMovie = async () => {
 		const data = await fetchTopRatedMovie();
 		setTopRated(data.results);
 	};
@@ -66,13 +66,11 @@ export default function Home({ navigation }) {
 					contentContainerStyle={{ paddingBottom: 20 }}
 				>
 					{trending.length > 0 && <TrendingMovie trending={trending} />}
+					{upcoming.length > 0 && <UpcomingMovie upcoming={upcoming} title={'Upcoming movie'} />}
 					{upcoming.length > 0 && (
-						<UpcomingMovie upcoming={upcoming.reverse()} title={'Upcoming Movies'} />
+						<UpcomingMovie upcoming={trending.reverse()} title={'Trending movie'} />
 					)}
-					{popular.length > 0 && <UpcomingMovie upcoming={popular} title={'Popular Movies'} />}
-					{trending.length > 0 && (
-						<UpcomingMovie upcoming={trending.reverse()} title={'Trending Movies'} />
-					)}
+					{popular.length > 0 && <UpcomingMovie upcoming={popular} title={'Popular movie'} />}
 					{topRated.length > 0 && <TrendingMovie trending={topRated} />}
 				</ScrollView>
 			)}
