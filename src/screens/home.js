@@ -3,8 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, View } from 'react-native';
 import { MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { fetchTopRatedMovie, fetchTrendingMovie, fetchUpcomingMovie } from '../api';
-import TopratedMovie from '../components/toprated';
+import {
+	fetchPopularMovie,
+	fetchTopRatedMovie,
+	fetchTrendingMovie,
+	fetchUpcomingMovie,
+} from '../api';
 import TrendingMovie from '../components/trending';
 import UpcomingMovie from '../components/upcoming';
 
@@ -12,11 +16,13 @@ export default function Home({ navigation }) {
 	const [trending, setTrending] = useState([]);
 	const [upcoming, setUpcoming] = useState([]);
 	const [topRated, setTopRated] = useState([]);
+	const [popular, setPopular] = useState([]);
 
 	useEffect(() => {
 		getTrendingMovie();
 		getUpcomingMovie();
 		getTopratedMovie();
+		getPopularMovie();
 	}, []);
 
 	const getTrendingMovie = async () => {
@@ -34,6 +40,11 @@ export default function Home({ navigation }) {
 		setTopRated(data.results);
 	};
 
+	const getPopularMovie = async () => {
+		const data = await fetchPopularMovie();
+		setPopular(data.results);
+	};
+
 	return (
 		<View className='flex-1 bg-slate-950'>
 			<SafeAreaView>
@@ -49,8 +60,14 @@ export default function Home({ navigation }) {
 				contentContainerStyle={{ paddingBottom: 20 }}
 			>
 				{trending.length > 0 && <TrendingMovie trending={trending} />}
-				{upcoming.length > 0 && <UpcomingMovie />}
-				{topRated.length > 0 && <TopratedMovie />}
+				{upcoming.length > 0 && (
+					<UpcomingMovie upcoming={upcoming.reverse()} title={'Upcoming Movies'} />
+				)}
+				{popular.length > 0 && <UpcomingMovie upcoming={popular} title={'Popular Movies'} />}
+				{trending.length > 0 && (
+					<UpcomingMovie upcoming={trending.reverse()} title={'Trending Movies'} />
+				)}
+				{topRated.length > 0 && <TrendingMovie trending={topRated} />}
 			</ScrollView>
 		</View>
 	);
