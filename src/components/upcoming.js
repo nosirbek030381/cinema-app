@@ -21,7 +21,7 @@ export default function UpcomingMovie({ upcoming, title }) {
 				{upcoming.map(item => (
 					<TouchableWithoutFeedback
 						key={item.id}
-						onPress={() => navigation.navigate('Movie', item)}
+						onPress={() => navigation.navigate('Movie', item.id)}
 					>
 						<View style={{ marginRight: 4 }}>
 							<Image
