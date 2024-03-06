@@ -15,7 +15,7 @@ export default function UpcomingMovie({ upcoming, title }) {
 				contentContainerStyle={{ paddingHorizontal: 15 }}
 			>
 				{upcoming.map(item => (
-					<View className={'mr-4'} key={item.name}>
+					<View className={'mr-4'} key={item.id}>
 						<Image
 							source={{ uri: image185(item.poster_path) }}
 							style={{ width: width * 0.3, height: height * 0.2 }}

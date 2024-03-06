@@ -9,6 +9,7 @@ import {
 	fetchTrendingMovie,
 	fetchUpcomingMovie,
 } from '../api';
+import Loader from '../components/loader';
 import TrendingMovie from '../components/trending';
 import UpcomingMovie from '../components/upcoming';
 
@@ -17,6 +18,7 @@ export default function Home({ navigation }) {
 	const [upcoming, setUpcoming] = useState([]);
 	const [topRated, setTopRated] = useState([]);
 	const [popular, setPopular] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		getTrendingMovie();
@@ -28,6 +30,7 @@ export default function Home({ navigation }) {
 	const getTrendingMovie = async () => {
 		const data = await fetchTrendingMovie();
 		setTrending(data.results);
+		setIsLoading(false);
 	};
 
 	const getUpcomingMovie = async () => {
@@ -55,20 +58,24 @@ export default function Home({ navigation }) {
 				</View>
 			</SafeAreaView>
 
-			<ScrollView
-				showsVerticalScrollIndicator={false}
-				contentContainerStyle={{ paddingBottom: 20 }}
-			>
-				{trending.length > 0 && <TrendingMovie trending={trending} />}
-				{upcoming.length > 0 && (
-					<UpcomingMovie upcoming={upcoming.reverse()} title={'Upcoming Movies'} />
-				)}
-				{popular.length > 0 && <UpcomingMovie upcoming={popular} title={'Popular Movies'} />}
-				{trending.length > 0 && (
-					<UpcomingMovie upcoming={trending.reverse()} title={'Trending Movies'} />
-				)}
-				{topRated.length > 0 && <TrendingMovie trending={topRated} />}
-			</ScrollView>
+			{isLoading ? (
+				<Loader />
+			) : (
+				<ScrollView
+					showsVerticalScrollIndicator={false}
+					contentContainerStyle={{ paddingBottom: 20 }}
+				>
+					{trending.length > 0 && <TrendingMovie trending={trending} />}
+					{upcoming.length > 0 && (
+						<UpcomingMovie upcoming={upcoming.reverse()} title={'Upcoming Movies'} />
+					)}
+					{popular.length > 0 && <UpcomingMovie upcoming={popular} title={'Popular Movies'} />}
+					{trending.length > 0 && (
+						<UpcomingMovie upcoming={trending.reverse()} title={'Trending Movies'} />
+					)}
+					{topRated.length > 0 && <TrendingMovie trending={topRated} />}
+				</ScrollView>
+			)}
 		</View>
 	);
 }
