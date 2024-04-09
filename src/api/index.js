@@ -1,7 +1,7 @@
 import { api_key } from '../constants';
 import { apiRequest } from './axios';
 
-const base_url = 'https://api.themoviedb.org/3';
+export const base_url = 'https://api.themoviedb.org/3';
 
 const trendingMovie = `${base_url}/trending/movie/day?api_key=${api_key}`;
 const upcomingMovie = `${base_url}/movie/upcoming?api_key=${api_key}`;
