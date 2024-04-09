@@ -29,7 +29,7 @@ export default function UpcomingMovie({ upcoming, title }) {
 								style={{ width: width * 0.3, height: height * 0.2, borderRadius: 8 }}
 							/>
 							<Text style={{ color: 'white' }}>
-								{item.title.length > 12 ? item.title.slice(0, 12) + '...' : item.title}
+								{item.title.length > 22 ? item.title.slice(0, 22) + '...' : item.title}
 							</Text>
 						</View>
 					</TouchableWithoutFeedback>

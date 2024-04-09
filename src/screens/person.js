@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react/cjs/react.development';
 import { fetchPersonDetail, fetchPersonMovies, image342 } from '../api';
 import Loader from '../components/loader';
-import UpcomingMovie from '../components/upcoming-movie';
+import UpcomingMovie from '../components/upcoming';
 
 const { width, height } = Dimensions.get('window');
 

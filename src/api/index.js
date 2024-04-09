@@ -12,8 +12,14 @@ const movieDetail = id => `${base_url}/movie/${id}?api_key=${api_key}`;
 const movieCredits = id => `${base_url}/movie/${id}/credits?api_key=${api_key}`;
 const similarMovie = id => `${base_url}/movie/${id}/similar?api_key=${api_key}`;
 
+const searchMovie = `${base_url}/search/movie?api_key=${api_key}`;
+
 const personalDetail = id => `${base_url}/person/${id}?api_key=${api_key}`;
 const personMovies = id => `${base_url}/person/${id}/movie_credits?api_key=${api_key}`;
+
+export const fetchSearchMovie = params => {
+	return apiRequest(searchMovie, params);
+};
 
 export const fetchPersonDetail = id => {
 	return apiRequest(personalDetail(id));
