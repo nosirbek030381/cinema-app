@@ -1,15 +1,14 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, Image, Linking, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { ChevronLeftIcon } from 'react-native-heroicons/outline';
 import { HeartIcon } from 'react-native-heroicons/solid';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { base_url, fetchMovieCredits, fetchMovieDetail, fetchSimilarMovie, image500 } from '../api';
+import { fetchMovieCredits, fetchMovieDetail, fetchSimilarMovie, image500 } from '../api';
 import Cast from '../components/cast';
 import Loader from '../components/loader';
 import UpcomingMovie from '../components/upcoming';
-import { api_key } from '../constants';
 
 const { width, height } = Dimensions.get('window');
 
@@ -19,7 +18,6 @@ export default function Movie() {
 	const [cast, setCast] = useState([]);
 	const [similarMovie, setSimilarMovie] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
-	const [videoUrl, setVideoUrl] = useState(null); // Video URL'ni saqlash uchun useState
 
 	const navigation = useNavigation();
 	const { params: id } = useRoute();
@@ -28,7 +26,6 @@ export default function Movie() {
 		getMovieDetail();
 		getMovieCredits();
 		getSimilarMovie();
-		fetchVideo(); // Videoni yuklash uchun fetchVideo funksiyasini chaqiramiz
 	}, [id]);
 
 	const getMovieDetail = async () => {
@@ -47,25 +44,14 @@ export default function Movie() {
 		setSimilarMovie(data.results);
 	};
 
-	const fetchVideo = async () => {
-		try {
-			const api = `${base_url}/${
-				movie?.media_type === 'tv' ? 'tv' : 'movie'
-			}/${id}/videos?api_key=${api_key}&language=en-US`;
-			const response = await fetch(api); // API dan ma'lumotni olish
-			const data = await response.json(); // JSON formatiga o'girish
-			// Avvalgi shu yerda video ma'lumotlari borligini tekshiramiz
-			if (data.results && data.results.length > 0) {
-				// Agar ma'lumotlar bo'lsa, eng birinchisini olib video URL ni saqlaymiz
-				setVideoUrl(`https://www.youtube.com/watch?v=${data.results[0].key}`);
-			}
-		} catch (error) {
-			console.error('Video yuklashda xatolik:', error);
-		}
-	};
-
 	const handleToggleFavorite = () => {
 		setIsFavourite(prev => !prev);
+
+		if (isFavourite) {
+			alert('Removed from favorite');
+		} else {
+			alert('Added to favorite');
+		}
 	};
 
 	return (
@@ -119,13 +105,6 @@ export default function Movie() {
 
 				<Text className={'text-neutral-400 mx-4 tracking-wide'}>{movie?.overview}</Text>
 			</View>
-
-			{/* Videoni ko'rish uchun TouchableOpacity qo'shamiz */}
-			{videoUrl && (
-				<TouchableOpacity onPress={() => Linking.openURL(videoUrl)}>
-					<Text style={{ color: 'white', textAlign: 'center', marginTop: 20 }}>Watch Video</Text>
-				</TouchableOpacity>
-			)}
 
 			{movie?.id && cast.length > 0 && <Cast cast={cast} />}
 
