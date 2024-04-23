@@ -13,6 +13,7 @@ import {
 import Loader from '../components/loader';
 import TrendingMovie from '../components/trending';
 import UpcomingMovie from '../components/upcoming';
+import { getList } from '../constants/lists';
 
 export default function Home() {
 	const [trending, setTrending] = useState([]);
@@ -20,6 +21,7 @@ export default function Home() {
 	const [topRated, setTopRated] = useState([]);
 	const [popular, setPopular] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const [myList, setMyList] = useState([]);
 
 	const navigation = useNavigation();
 
@@ -28,7 +30,14 @@ export default function Home() {
 		getUpcomingMovie();
 		getTopRatedMovie();
 		getPopularMovie();
+		myFavourite();
 	}, []);
+
+	const myFavourite = async () => {
+		const list = await getList(id);
+		setMyList(list);
+		console.log(list);
+	};
 
 	const getTrendingMovie = async () => {
 		const data = await fetchTrendingMovie();
@@ -75,6 +84,7 @@ export default function Home() {
 					{upcoming.length > 0 && (
 						<UpcomingMovie upcoming={trending.reverse()} title={'Trending movie'} />
 					)}
+					{myList.length ? <UpcomingMovie title='My List' movies={myList} /> : null}
 					{popular.length > 0 && <UpcomingMovie upcoming={popular} title={'Popular movie'} />}
 					{topRated.length > 0 && <TrendingMovie trending={topRated} />}
 				</ScrollView>

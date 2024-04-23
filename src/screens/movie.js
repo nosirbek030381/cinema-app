@@ -44,8 +44,19 @@ export default function Movie() {
 		setSimilarMovie(data.results);
 	};
 
-	const handleToggleFavorite = () => {
+	const handleToggleFavorite = async () => {
 		setIsFavourite(prev => !prev);
+
+		setIsLoading(true);
+		try {
+			await addDoc(collection(db, 'list'), {});
+			setIsLoading(false);
+			navigation.navigate('Home');
+			setOpen(true);
+		} catch (e) {
+			console.error('Error adding document: ', e);
+			setIsLoading(false);
+		}
 
 		if (isFavourite) {
 			alert('Removed from favorite');
